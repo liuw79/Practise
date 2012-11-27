@@ -28,10 +28,12 @@
 -(void) addImageView:(id)sender
 {
     //新增一个图片
-    //多次添加会有问题
+    //多次添加会有问题： 移除=！释放
     
     UIImage *image1 = [UIImage imageNamed:@"google.png"];
     UIImageView *tmpImgView = [[UIImageView alloc] initWithImage:image1];
+    [tmpImgView setTag:1];
+    
     CGRect ivFrame = CGRectMake(0, 150, 200, 200);
     [tmpImgView setFrame:ivFrame];
     [tmpImgView setContentMode:UIViewContentModeScaleAspectFit];
@@ -51,9 +53,18 @@
 -(void) removeImageView:(id)sender
 {
     NSLog(@"Remove pressed");
-    if(self.imageView1)
+//    if(self.imageView1)
+//    {
+//        [self.imageView1 removeFromSuperview];
+//    }
+    //用tag删除
+    for (UIView *tmpView in self.view.subviews)
     {
-        [self.imageView1 removeFromSuperview];
+        if (tmpView.tag == 1)
+        {
+            [tmpView removeFromSuperview];
+            NSLog(@"removed by tag");
+        }
     }
 }
 
